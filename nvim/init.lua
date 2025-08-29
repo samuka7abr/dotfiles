@@ -2,7 +2,7 @@
   Neovim Configuration
   Modular and clean configuration for development
 --]]
---test 
+
 -- Install lazy.nvim if not present
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -27,13 +27,13 @@ vim.api.nvim_create_autocmd('User', {
   pattern = 'LazyDone',
   callback = function()
     require('config.plugin-keymaps')
-    require('config.colorscheme')
   end,
 })
 
 -- Configure and install plugins
 require('lazy').setup({
   -- Import plugin configurations
+  { import = 'plugins.theme' },
   { import = 'plugins.lsp' },
   { import = 'plugins.completion' },
   { import = 'plugins.telescope' },

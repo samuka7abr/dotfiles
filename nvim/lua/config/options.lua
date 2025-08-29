@@ -61,3 +61,14 @@ vim.o.scrolloff = 10
 
 -- Ask to save changes before quitting
 vim.o.confirm = true
+
+-- Cursor configuration
+vim.o.cursorline = true
+vim.o.cursorlineopt = 'line'
+vim.o.guicursor = 'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
+
+-- Better visual feedback
+vim.o.termguicolors = true
+vim.o.showmatch = true
+vim.o.matchtime = 2
+
