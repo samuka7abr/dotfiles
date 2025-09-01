@@ -6,28 +6,31 @@ return {
     'olimorris/onedarkpro.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
-      require('onedarkpro').setup({
+      require('onedarkpro').setup {
         -- Theme to use
-        theme = "onedark", -- onedark, onelight, onedark_vivid, onelight_vivid, onedark_dark, onelight_dark
-        
+        theme = 'onedark', -- onedark, onelight, onedark_vivid, onelight_vivid, onedark_dark, onelight_dark
+
         -- Cursor line highlighting
         cursorline = true,
-        
+
         -- Transparent background
         transparent = false,
-        
+
         -- Custom highlights (optional)
         highlights = {
           -- Cursor customization
-          Cursor = { bg = "#61afef", fg = "#1e1e1e" },
-          CursorLine = { bg = "#2a2a2a" },
-          CursorLineNr = { fg = "#61afef", bg = "#2a2a2a" },
-          
+          Cursor = { bg = '#61afef', fg = '#1e1e1e' },
+          CursorLine = { bg = '#2a2a2a' },
+          CursorLineNr = { fg = '#61afef', bg = '#2a2a2a' },
+
           -- Status line
-          StatusLine = { bg = "#2a2a2a", fg = "#e8e8e8" },
-          StatusLineNC = { bg = "#1e1e1e", fg = "#888888" },
+          StatusLine = { bg = '#2a2a2a', fg = '#e8e8e8' },
+          StatusLineNC = { bg = '#1e1e1e', fg = '#888888' },
+
+          -- Apenas cor do ícone das pastas
+          NvimTreeFolderIcon = { fg = '#888888' },
         },
-        
+
         -- Plugin integrations
         plugins = {
           -- All supported plugins are enabled by default
@@ -45,7 +48,7 @@ return {
           treesitter = true,
           which_key = true,
         },
-      })
+      }
 
       -- Load the colorscheme
       vim.cmd.colorscheme 'onedark'
