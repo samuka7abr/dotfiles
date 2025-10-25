@@ -392,7 +392,7 @@ require('lazy').setup({
             },
           },
         },
-        ['typescript-language-server'] = {
+        ts_ls = {
           settings = {
             typescript = {
               preferences = {
@@ -521,7 +521,9 @@ require('lazy').setup({
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
-        ensure_installed = { 'lua_ls', 'typescript-language-server', 'gopls' },
+        ensure_installed = { 'lua_ls', 'ts_ls' },
+        -- gopls requer Go instalado: descomente se você programa em Go
+        -- ensure_installed = { 'lua_ls', 'ts_ls', 'gopls' },
         automatic_installation = false,
         handlers = {
           function(server_name)
@@ -619,13 +621,8 @@ require('lazy').setup({
   {
     'rebelot/kanagawa.nvim',
     name = 'kanagawa',
-    priority = 1000,
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('kanagawa').setup {}
-
-      vim.cmd 'colorscheme kanagawa-dragon'
-    end,
+    priority = 900,
+    enabled = false, -- Desabilitado, usando One Dark Pro
   },
 
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
