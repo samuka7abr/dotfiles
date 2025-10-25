@@ -1,0 +1,27 @@
+[config]
+
+# Kitty terminal colors
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty-colors.conf'
+output_path = '~/.config/kitty/colors-matugen.conf'
+post_hook = 'pkill -SIGUSR1 kitty'
+
+# GTK 3 colors
+[templates.gtk3]
+input_path = '~/.config/matugen/templates/gtk-colors.css'
+output_path = '~/.config/gtk-3.0/colors.css'
+
+# GTK 4 colors
+[templates.gtk4]
+input_path = '~/.config/matugen/templates/gtk-colors.css'
+output_path = '~/.config/gtk-4.0/colors.css'
+
+# GNOME Shell colors
+[templates.gnome]
+input_path = '~/.config/matugen/templates/gnome-colors.css'
+output_path = '~/.config/gnome-shell/colors.css'
+
+# Pywalfox (browser colors - optional)
+[templates.pywalfox]
+input_path = '~/.config/matugen/templates/pywalfox-colors.json'
+output_path = '~/.cache/wal/colors.json'

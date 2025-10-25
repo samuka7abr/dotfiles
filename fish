@@ -1,1 +1,0 @@
-/home/samuka7abr/.mydotfiles/com.ml4w.dotfiles/.config/fish
