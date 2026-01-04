@@ -16,13 +16,13 @@ return {
         number = '0143',
         size = 'auto',
       }
-      
+
       dashboard.section.header.val = pokemon.header()
 
       -- Cor azul-acinzentada para o Snorlax
       vim.api.nvim_set_hl(0, 'AlphaHeader', { fg = '#7C8A9D', bg = 'NONE' })
       vim.api.nvim_set_hl(0, 'AlphaButtons', { fg = '#61AFEF', bg = 'NONE' })
-      
+
       dashboard.section.header.opts.hl = 'AlphaHeader'
 
       alpha.setup(dashboard.config)
@@ -32,4 +32,3 @@ return {
     end,
   },
 }
-
