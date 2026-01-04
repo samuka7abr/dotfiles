@@ -27,7 +27,12 @@ alias v='$EDITOR'
 alias vim='$EDITOR'
 alias wifi='nmtui'
 alias setwallpaper='~/.config/wallpaper-colors.sh'
-
+alias wpp='~/.config/wallpaper-colors.sh'
+alias pinga='ping 8.8.8.8'
+alias mouse='echo "1@Samuel1501" | sudo -S systemctl restart logid && sleep 1.5 && exit'
+alias chaveSSH='ssh-add ~/.ssh/id_ed25519_work'
+alias aliasList='cat ~/.config/fish/config.fish | grep alias'
+alias gnome='systemctl restart gdm.service'
 # -----------------------------------------------------
 # Aliases - Git
 # -----------------------------------------------------
@@ -82,3 +87,7 @@ if status is-interactive
         fastfetch
     end
 end
+
+# Keychain - gerencia chaves SSH automaticamente
+eval (keychain --eval --quiet --agents ssh id_ed25519_work)
+
