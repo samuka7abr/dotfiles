@@ -742,31 +742,102 @@ require('lazy').setup({
 
                 opts = {
                     diff_opts = {
+                        enabled = false, -- Desabilita buffers de diff/preview
                         auto_close_on_accept = true,
-                        vertical_split = true,
+                        vertical_split = false, -- Desabilita splits verticais
                         open_in_current_tab = false,
                         keep_terminal_focus = true,
                     },
+                    auto_open_diff = false, -- Nunca abre diffs automaticamente
                 },
             }
 
-            -- Autocommand para manter width em 0.3 quando tree abre/fecha
-            vim.api.nvim_create_autocmd({ 'WinResized', 'WinClosed' }, {
-                group = vim.api.nvim_create_augroup('claudecode-width-fix', { clear = true }),
+            -- Autocommand para fechar automaticamente buffers/janelas abertas pelo Claude
+            vim.api.nvim_create_autocmd({ 'WinNew', 'BufWinEnter' }, {
+                group = vim.api.nvim_create_augroup('claudecode-no-preview', { clear = true }),
+                callback = function(ev)
+                    vim.defer_fn(function()
+                        -- Verifica se há múltiplas janelas normais de código (não Tree, não Terminal)
+                        local code_windows = {}
+
+                        for _, win in ipairs(vim.api.nvim_list_wins()) do
+                            local buf = vim.api.nvim_win_get_buf(win)
+                            local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+                            local bt = vim.api.nvim_buf_get_option(buf, 'buftype')
+
+                            -- Se é janela de código (não Tree, não terminal, não nofile)
+                            if ft ~= 'NvimTree' and bt ~= 'terminal' and bt ~= 'nofile' then
+                                table.insert(code_windows, win)
+                            end
+                        end
+
+                        -- Se tem mais de uma janela de código, fecha as extras
+                        -- (que foram abertas pelo Claude ou por split acidental)
+                        if #code_windows > 1 then
+                            for i = 2, #code_windows do
+                                local win = code_windows[i]
+                                if vim.api.nvim_win_is_valid(win) then
+                                    -- Salva o arquivo se tiver mudanças, depois fecha
+                                    pcall(function()
+                                        local buf = vim.api.nvim_win_get_buf(win)
+                                        if vim.api.nvim_buf_get_option(buf, 'modified') then
+                                            vim.api.nvim_buf_call(buf, function()
+                                                vim.cmd('write')
+                                            end)
+                                        end
+                                    end)
+                                    pcall(vim.api.nvim_win_close, win, true)
+                                end
+                            end
+                        end
+                    end, 20)
+                end,
+            })
+
+            -- Autocommand para manter width/height de Claude e Tree fixos
+            vim.api.nvim_create_autocmd({ 'WinResized', 'WinClosed', 'WinNew', 'BufWinEnter' }, {
+                group = vim.api.nvim_create_augroup('claudecode-layout-fix', { clear = true }),
                 callback = function()
-                    -- Encontra a janela do claudecode (terminal na direita)
+                    local total_width = vim.o.columns
+                    local total_height = vim.o.lines - vim.o.cmdheight - 1 -- Desconta statusline
+
                     for _, win in ipairs(vim.api.nvim_list_wins()) do
                         local buf = vim.api.nvim_win_get_buf(win)
+                        local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
                         local bt = vim.api.nvim_buf_get_option(buf, 'buftype')
-                        if bt == 'terminal' then
-                            -- Calcula 30% da largura total
-                            local total_width = vim.o.columns
-                            local target_width = math.floor(total_width * 0.3)
-                            local current_width = vim.api.nvim_win_get_width(win)
+                        local win_config = vim.api.nvim_win_get_config(win)
 
-                            -- Se a largura não for ~30%, ajusta
-                            if math.abs(current_width - target_width) > 5 then
+                        -- NvimTree: mantém à esquerda com altura total (15% da largura)
+                        if ft == 'NvimTree' then
+                            local target_width = math.floor(total_width * 0.15)
+                            if vim.api.nvim_win_get_width(win) ~= target_width then
                                 vim.api.nvim_win_set_width(win, target_width)
+                            end
+                            -- Força altura total
+                            if vim.api.nvim_win_get_height(win) ~= total_height then
+                                pcall(vim.api.nvim_win_set_height, win, total_height)
+                            end
+                            -- Trava o tamanho da janela
+                            vim.api.nvim_win_set_option(win, 'winfixwidth', true)
+                            vim.api.nvim_win_set_option(win, 'winfixheight', true)
+                        end
+
+                        -- Claude (terminal vertical): mantém à direita com altura total (30% da largura)
+                        if bt == 'terminal' then
+                            local is_vertical = win_config.split == 'left' or win_config.split == 'right'
+
+                            if is_vertical then
+                                local target_width = math.floor(total_width * 0.3)
+                                if vim.api.nvim_win_get_width(win) ~= target_width then
+                                    vim.api.nvim_win_set_width(win, target_width)
+                                end
+                                -- Força altura total
+                                if vim.api.nvim_win_get_height(win) ~= total_height then
+                                    pcall(vim.api.nvim_win_set_height, win, total_height)
+                                end
+                                -- Trava o tamanho da janela
+                                vim.api.nvim_win_set_option(win, 'winfixwidth', true)
+                                vim.api.nvim_win_set_option(win, 'winfixheight', true)
                             end
                         end
                     end
