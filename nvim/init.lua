@@ -739,7 +739,39 @@ require('lazy').setup({
                     height = 0.8, -- 80% da altura
                     position = 'right', -- 'left', 'right', 'top', 'bottom', 'center'
                 },
+
+                opts = {
+                    diff_opts = {
+                        auto_close_on_accept = true,
+                        vertical_split = true,
+                        open_in_current_tab = false,
+                        keep_terminal_focus = true,
+                    },
+                },
             }
+
+            -- Autocommand para manter width em 0.3 quando tree abre/fecha
+            vim.api.nvim_create_autocmd({ 'WinResized', 'WinClosed' }, {
+                group = vim.api.nvim_create_augroup('claudecode-width-fix', { clear = true }),
+                callback = function()
+                    -- Encontra a janela do claudecode (terminal na direita)
+                    for _, win in ipairs(vim.api.nvim_list_wins()) do
+                        local buf = vim.api.nvim_win_get_buf(win)
+                        local bt = vim.api.nvim_buf_get_option(buf, 'buftype')
+                        if bt == 'terminal' then
+                            -- Calcula 30% da largura total
+                            local total_width = vim.o.columns
+                            local target_width = math.floor(total_width * 0.3)
+                            local current_width = vim.api.nvim_win_get_width(win)
+
+                            -- Se a largura não for ~30%, ajusta
+                            if math.abs(current_width - target_width) > 5 then
+                                vim.api.nvim_win_set_width(win, target_width)
+                            end
+                        end
+                    end
+                end,
+            })
 
             -- Keymaps
             vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<cr>', { desc = '[C]laude [C]ode: Toggle' })
