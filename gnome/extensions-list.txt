@@ -1,0 +1,13 @@
+dash2dock-lite@icedman.github.com
+dash-to-dock@micxgx.gmail.com
+openbar@neuromorph
+blur-my-shell@aunetx
+burn-my-windows@schneegans.github.com
+compiz-alike-magic-lamp-effect@hermes83.github.com
+workspace-indicator@gnome-shell-extensions.gcampax.github.com
+apps-menu@gnome-shell-extensions.gcampax.github.com
+background-logo@fedorahosted.org
+launch-new-instance@gnome-shell-extensions.gcampax.github.com
+places-menu@gnome-shell-extensions.gcampax.github.com
+window-list@gnome-shell-extensions.gcampax.github.com
+appindicatorsupport@rgcjonas.gmail.com

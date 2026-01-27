@@ -1,0 +1,111 @@
+{
+    "files.autoSave": "afterDelay",
+    "cmake.showOptionsMovedNotification": false,
+    "explorer.confirmDragAndDrop": false,
+    "debug.onTaskErrors": "abort",
+    "explorer.confirmDelete": false,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "python.createEnvironment.trigger": "off",
+    "database-client.autoSync": true,
+    "liveServer.settings.donotVerifyTags": true,
+    "git.openRepositoryInParentFolders": "never",
+    "explorer.compactFolders": false,
+    "redhat.telemetry.enabled": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 4
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 4
+    },
+    "[prisma]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "Prisma.prisma"
+    },
+    "editor.inlineSuggest.enabled": false,
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "workbench.editor.empty.hint": "hidden",
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "githubPullRequests.pullBranch": "never",
+    "explorer.confirmPasteNative": false,
+    "terminal.integrated.profiles.linux": {
+        "fish": {
+            "path": "fish"
+        },
+        "bash": {
+            "path": "bash"
+        },
+        "zsh": {
+            "path": "zsh"
+        },
+        "RUN": {
+            "path": "fish",
+            "args": [],
+            "icon": "run",
+            "color": "terminal.ansiCyan",
+            "overrideName": true
+        },
+        "DATABASE": {
+            "path": "fish",
+            "args": [],
+            "icon": "database",
+            "color": "terminal.ansiBlue",
+            "overrideName": true
+        },
+        "GIT": {
+            "path": "fish",
+            "args": [],
+            "icon": "logo-github",
+            "color": "terminal.ansiRed",
+            "overrideName": true
+        },
+        "COMANDOS": {
+            "path": "fish",
+            "args": [],
+            "icon": "terminal-bash",
+            "color": "terminal.ansiGreen",
+            "overrideName": true
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "fish",
+    "workbench.iconTheme": "symbols",
+    "symbols.files.associations": {
+        "vitest.config.e2e.ts": "vite",
+        "*.controller.ts": "nest-controller",
+        "*.service.ts": "nest-service",
+        "*.module.ts": "nest",
+        "*.guard.ts": "nest",
+        "*.interceptor.ts": "nest",
+        "*.filter.ts": "nest",
+        "*.pipe.ts": "nest",
+        "*.dto.ts": "nest",
+        "*.entity.ts": "typeorm",
+        "*.repository.ts": "nest",
+        "*.middleware.ts": "nest-middleware",
+        "app.module.ts": "nest",
+        "app.controller.ts": "nest",
+        "app.service.ts": "nest",
+        "git-commit.sh": "github",
+        "*.s": "code-gray"
+    },
+    "symbols.folders.associations": {
+        "controllers": "folder-config"
+    },
+    "workbench.colorTheme": "One Dark Pro Darker",
+    "vscode-pokemon.pokemonSize": "small",
+    "vscode-pokemon.theme": "forest",
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+    "symbols.hidesExplorerArrows": false,
+    "editor.fontFamily": "'JetBrains Mono', monospace",
+    "editor.fontWeight": "400",
+    "editor.fontLigatures": true
+}

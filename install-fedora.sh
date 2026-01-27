@@ -56,7 +56,71 @@ install_nodejs_typescript() {
     echo "=> Node.js e TypeScript instalados."
 }
 
-# Instala a linguagem Go
+# Instala Fish shell
+install_fish() {
+    echo "=> Instalando Fish shell..."
+    dnf install -y fish util-linux-user
+    # Define Fish como shell padrão (opcional, descomente se quiser)
+    # chsh -s /usr/bin/fish ${SUDO_USER_NAME}
+    echo "=> Fish shell instalado."
+    echo "   Para definir como shell padrão: chsh -s /usr/bin/fish"
+}
+
+# Instala Kitty terminal
+install_kitty() {
+    echo "=> Instalando Kitty terminal..."
+    dnf install -y kitty
+    echo "=> Kitty terminal instalado."
+}
+
+# Instala Neovim e dependências
+install_neovim() {
+    echo "=> Instalando Neovim e dependências..."
+    dnf install -y neovim ripgrep fd-find fzf
+    # Instala o gerenciador de plugins lazy.nvim (será baixado automaticamente na primeira execução)
+    echo "=> Neovim instalado."
+    echo "   As configurações estão em ~/.config/nvim"
+}
+
+# Instala Git LFS e GitHub CLI
+install_git_tools() {
+    echo "=> Instalando Git LFS e GitHub CLI..."
+    dnf install -y git-lfs gh
+    git lfs install
+    echo "=> Git tools instalados."
+    echo "   Configure o GitHub CLI com: gh auth login"
+}
+
+# Instala Oh My Posh
+install_ohmyposh() {
+    echo "=> Instalando Oh My Posh..."
+    # Método oficial de instalação
+    curl -s https://ohmyposh.dev/install.sh | bash -s
+    echo "=> Oh My Posh instalado."
+}
+
+# Instala ferramentas GNOME
+install_gnome_tools() {
+    echo "=> Instalando ferramentas GNOME e extensões..."
+    dnf install -y gnome-tweaks gnome-extensions-app gnome-shell-extension-manager
+    echo "=> Ferramentas GNOME instaladas."
+}
+
+# Instala Rust e Cargo (necessário para matugen)
+install_rust() {
+    echo "=> Instalando Rust e Cargo..."
+    # Instala Rust como usuário normal
+    su - ${SUDO_USER_NAME} -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
+    echo "=> Rust instalado."
+}
+
+# Instala matugen (gerenciador de cores)
+install_matugen() {
+    echo "=> Instalando matugen..."
+    # Instala via cargo como usuário normal
+    su - ${SUDO_USER_NAME} -c "source ~/.cargo/env && cargo install matugen"
+    echo "=> Matugen instalado."
+}
 
 # Instala Docker e Docker Compose
 install_docker() {
@@ -119,28 +183,41 @@ install_php_laravel() {
 # --- Função Principal de Execução ---
 main() {
     echo "--- INICIANDO CONFIGURAÇÃO DO AMBIENTE DE DESENVOLVIMENTO (FEDORA) ---"
-    
+
     update_and_install_deps
     install_build_tools
     install_python
     install_nodejs_typescript
+    install_rust
     install_docker
     install_php_laravel
+    install_fish
+    install_kitty
+    install_neovim
+    install_git_tools
+    install_ohmyposh
+    install_gnome_tools
+    install_matugen
 
     echo ""
     echo "--- INSTALAÇÃO CONCLUÍDA COM SUCESSO! ---"
     echo ""
     echo "Resumo e Próximos Passos:"
-    echo "✅ Go, TypeScript, Python, C/C++, PHP e Laravel Installer instalados."
+    echo "✅ TypeScript, Python, C/C++, PHP, Laravel, Rust instalados."
     echo "✅ Docker e Docker Compose instalados."
+    echo "✅ Fish shell, Kitty terminal, Neovim instalados."
+    echo "✅ Git LFS, GitHub CLI (gh) instalados."
+    echo "✅ Oh My Posh, ferramentas GNOME instaladas."
+    echo "✅ Matugen (gerenciador de cores) instalado."
     echo ""
     echo "⚠️ AÇÃO NECESSÁRIA:"
     echo "   - Para usar o Docker sem 'sudo', você PRECISA fazer logout e login novamente."
-    echo "   - Para que as variáveis de ambiente (PATH para Go e Laravel) funcionem, reinicie seu terminal."
+    echo "   - Para que as variáveis de ambiente funcionem, reinicie seu terminal."
+    echo "   - Configure o GitHub CLI com: gh auth login"
+    echo "   - Para usar Fish como shell padrão: chsh -s /usr/bin/fish"
     echo "   - (Recomendado: reinicie o computador para garantir que tudo foi carregado corretamente)."
     echo ""
     echo "Verificações rápidas (após reiniciar o terminal):"
-    echo "   go version"
     echo "   tsc -v"
     echo "   python3 --version"
     echo "   gcc --version"
@@ -148,6 +225,12 @@ main() {
     echo "   php -v"
     echo "   composer --version"
     echo "   laravel --version"
+    echo "   fish --version"
+    echo "   kitty --version"
+    echo "   nvim --version"
+    echo "   gh --version"
+    echo "   oh-my-posh --version"
+    echo "   matugen --version"
 }
 
 # Executa a função principal
